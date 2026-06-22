@@ -5,6 +5,7 @@ const cart = useCartStore().cart
 
 <template>
   <v-container>
+   
         <v-row>
             <v-col md="12">
                 <div class="text-display-medium mb-12 mt-12 text-center">
@@ -12,7 +13,12 @@ const cart = useCartStore().cart
                 </div>
             </v-col>
         </v-row>
-        <v-row>
+        <div v-if="cart.length === 0" class="text-center mt-12">
+                <v-icon icon="mdi-cart-off" size="64" color="grey"></v-icon>
+                <div class="text-h6 mt-4 text-grey">Your cart is empty</div>
+                <v-btn color="primary" class="mt-4" to="/books">Browse Books</v-btn>
+            </div>
+        <v-row v-else>
             <v-col md="12" v-for="item in cart">
                 <v-card color="primary">
                     <v-row >

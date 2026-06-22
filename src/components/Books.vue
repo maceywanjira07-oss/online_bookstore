@@ -3,10 +3,25 @@ import {ref} from 'vue'
 import { useBooksStore } from '../stores/books'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
+import{useWishlistStore} from '../stores/wishlist'
 
 const router = useRouter()
 const booksStore = useBooksStore()
 const books= booksStore.books 
+const wishlistStore = useWishlistStore()
+
+function isWishlisted(book) {
+    return wishlistStore.wishlist.some(b => b.name === book.name)
+}
+
+function toggleWishlist(book) {
+    if (isWishlisted(book)) {
+        const index = wishlistStore.wishlist.findIndex(b => b.name === book.name)
+        wishlistStore.removeFromWishlist(index)
+    } else {
+        wishlistStore.addToWishlist(book)
+    }
+}
 
 function view(book){
    booksStore.updateSelectedBook(book) // keep track of the selected item
@@ -51,7 +66,7 @@ function buy(book){
               <v-btn  color="primary" variant="elevated" @click="buy(book)">Add to Cart</v-btn>
                <v-btn  color="primary" variant="elevated" @click="view(book)">View Book</v-btn>
                
-                <v-btn icon="mdi-heart-outline" variant="text" @click="wishlistStore.addToWishlist(book)"></v-btn>
+                <v-btn :icon="isWishlisted(book) ? 'mdi-heart' : 'mdi-heart-outline'" :color="isWishlisted(book) ? 'red' : ''" variant="text" @click="toggleWishlist(book)"></v-btn>
             </v-card-actions>
           </v-card>
         </v-col>  

@@ -1,29 +1,33 @@
 <script setup>
+import {useWishlistStore} from '../stores/wishlist'
 import { computed } from 'vue'
-import { useBooksStore } from '@/stores/books' // Adjust this path to match your project directory
+import {useCartStore} from '../stores/cart'
 
-// Access your existing central Pinia store
-const booksStore = useBooksStore()
 
-// Keep UI reactive to any external changes inside your central store array
-const wishlist = computed(() => booksStore.wishlist)
 
-// Dispatches action execution directly to your state store core
-const buy = (book) => {
-  if (booksStore.addToCart) {
-    booksStore.addToCart(book)
-  } else {
-    alert(`${book.title} added to cart!`)
+
+
+const wishlistStore = useWishlistStore()
+const wishlist = computed(() => wishlistStore.wishlist || [])
+
+const cartStore = useCartStore()
+
+function addToCart(book) {
+    book.quantity = 1
+    cartStore.updateCart(book)
+  
+}
+function remove(bookId) {
+  const index = wishlistStore.wishlist.findIndex(item => item.id === bookId)
+  if (index !== -1) {
+    wishlistStore.removeFromWishlist(index)
   }
 }
 
-const remove = (id) => {
-  booksStore.removeFromWishlist(id)
-}
 </script>
 
 <template>
-  <v-container class="py-6">
+  <v-container class="md-4">
 
     <!-- Header Section using Vuetify Typography Classes -->
     <v-row justify="center">
@@ -32,6 +36,7 @@ const remove = (id) => {
           <v-icon color="error" class="mr-2">mdi-heart</v-icon>My Wishlist ({{ wishlist.length }})
         </h1>
       </v-col>
+      
     </v-row>
 
     <!-- Empty State Fallback using Vuetify Layout and Components -->
@@ -51,23 +56,23 @@ const remove = (id) => {
 
     <!-- Dynamic Wishlist Grid using Vuetify List/Card Architecture -->
     <v-row v-else>
-      <v-col
+      <v-col align="center"
         cols="12"
         v-for="book in wishlist"
-        :key=id:1
+        :key="book.id"
       >
-        <v-card class="pa-4 mb-2 rounded-lg" elevation="2" border>
+        <v-card class="pa-4 mb-2 rounded-lg" elevation="2" width="700" align="center" border>
           <v-row align="center" no-gutters>
 
             <!-- Book Cover Column -->
             <v-col cols="12" sm="3" md="2" class="d-flex justify-center justify-sm-start mb-4 mb-sm-0">
               <v-img
-                :src="Book1.jpg"
+                :src="book.image"
                 max-width="130"
                 max-height="190"
                 cover
                 class="rounded-lg bg-grey-lighten-2 elevation-2"
-                :alt="book.title"
+                
               />
             </v-col>
 
