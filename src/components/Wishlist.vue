@@ -31,7 +31,7 @@ function remove(bookId) {
 
     <!-- Header Section using Vuetify Typography Classes -->
     <v-row justify="center">
-      <v-col cols="12" class="text-center">
+      <v-col cols="12"  class="text-center ">
         <h1 class="text-h3 font-weight-bold my-6">
           <v-icon color="error" class="mr-2">mdi-heart</v-icon>My Wishlist ({{ wishlist.length }})
         </h1>
@@ -57,7 +57,7 @@ function remove(bookId) {
     <!-- Dynamic Wishlist Grid using Vuetify List/Card Architecture -->
     <v-row v-else>
       <v-col align="center"
-        cols="12"
+        cols="12" md="6" 
         v-for="book in wishlist"
         :key="book.id"
       >

@@ -37,7 +37,7 @@ function buy(book){
             </v-card>
             </v-col>
             <v-col md="6">
-                <v-card height="620" color="primary">
+                <v-card height="620" color="secondary">
                     <v-card-item>
                         <v-card-title class="mb-4">{{ book.name }}</v-card-title>
                         <v-chip class="mb-4">{{ book.genre }}</v-chip>

@@ -1,5 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import{useAuth}  from  '../services/auth'
+import{useRouter} from "vue-router";
+const router = useRouter();
+
+const{signup} = useAuth()
+
 
 const showPassword = ref(false)
 const password = ref(null) //model
@@ -30,24 +36,26 @@ function register()
         phone: phone.value,
         location: location.value,
         address: address.value,
-        password: password.value
+        password: password.value,
+        role:2,
 
+        //role 1 is for admin, role2 is for customer
     }
-    try {
-          localStorage.setItem("user",JSON.stringify(data))
-    }
-    catch{
-        console.log("Error signing up")
-    }
+    signup(data)
+    router.push('/').then(()=> {
+        router.go(0)
+    });
 }
 
 </script>
 
 <template>
-    <v-container align="center" class="mt-16">
-        <v-row>
+    <v-container align="center" class="mt-16 " >
+        <v-row no-gutters>
             <v-col>
-                <v-card max-width="80%" class="bg-secondary">
+                <v-card max-width="80%" class="bg-primary">
+                    <v-img src="/logo.png" height="300" width="200" class="mb-0 mt-0" ></v-img>
+                    <v-card-title class="text-display-medium mb-12  mt-0" >Sign Up</v-card-title>
                     <v-form class="mt-12" mb-6>
                         <v-row>
                             <v-col md="3"> 
@@ -113,10 +121,13 @@ function register()
                         </v-row>
                         <v-row>
                             <v-col md="6" >
-                                <v-btn @click="register()"> Sign Up</v-btn>
+                                <v-btn @click="register()" width="300" class="mb-5 " > Sign Up</v-btn>
                             </v-col>
                             <v-col md="6">
-                            <div>Already have an account?? </div>
+                            <div>Already have an account?? 
+                                 <router-link to="/login">Login </router-link>
+                            </div>
+                           
                             </v-col>
                         </v-row>
                     </v-form>

@@ -1,6 +1,14 @@
 <script setup>
 import { useCartStore } from '@/stores/cart';
 const cart = useCartStore().cart
+
+function remove(bookId) {
+  const index = cartStore.cart.findIndex(item => item.id === bookId)
+  if (index !== -1) {
+    cartStore.removeFromcart(index)
+  }
+}
+
 </script>
 
 <template>
@@ -20,7 +28,7 @@ const cart = useCartStore().cart
             </div>
         <v-row v-else>
             <v-col md="12" v-for="item in cart">
-                <v-card color="primary">
+                <v-card color="secondary">
                     <v-row >
                         <v-col md="4"  class="text-center d-flex align text justify-center">
                             <v-img :src="item.image" max-width="150" max-height="220" class="ma-4"cover></v-img>
@@ -35,6 +43,15 @@ const cart = useCartStore().cart
                                 <v-card-actions>
                                     <v-spacer></v-spacer> 
                                     <v-btn elevation="4" variant="elevated"> Checkout </v-btn>
+                                    <v-btn
+                color="error"
+                variant="outlined"
+                class="px-4 font-weight-bold"
+                prepend-icon="mdi-delete-outline"
+                @click="remove(book.id)"
+              >
+                Remove
+              </v-btn>
                                 </v-card-actions>
                         </v-col>
                     </v-row>
