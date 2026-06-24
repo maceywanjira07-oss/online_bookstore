@@ -118,6 +118,7 @@ export const useBooksStore = defineStore('books',  {
         } ,
         9:
         {
+          id:10,
           image:"/Book10.png",
           name:"A Doll's House",
           price:1350,
@@ -130,6 +131,7 @@ export const useBooksStore = defineStore('books',  {
         } ,
         10:
         {
+          id:11,
           image:"/Book11.png",
           name:"Rich Dad Poor Dad",
           price:1350,
@@ -142,6 +144,7 @@ export const useBooksStore = defineStore('books',  {
         } ,
         11:
         {
+          id:12,
           image:"/Book12.png",
           name:"The Psychology of Money",
           price:1350,
